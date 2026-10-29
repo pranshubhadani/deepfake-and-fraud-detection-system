@@ -139,11 +139,28 @@ def analyze_link(url):
         suspicion_score += 2
         reasons.append("Failed to fetch page content. The site might be down, invalid, or blocking automated requests.")
 
+    # Calculate scam probability percentage
+    if suspicion_score == 0:
+        scam_prob = 3.0
+    elif suspicion_score == 1:
+        scam_prob = 25.0
+    elif suspicion_score == 2:
+        scam_prob = 52.0
+    elif suspicion_score == 3:
+        scam_prob = 74.0
+    elif suspicion_score == 4:
+        scam_prob = 89.0
+    else:
+        scam_prob = min(99.0, 90.0 + (suspicion_score - 4) * 2.5)
+
+    scam_prob = round(scam_prob, 1)
+    safe_prob = round(100.0 - scam_prob, 1)
+
     # Determine final status based on Methodology Step 5
-    if suspicion_score >= 4:
-        status = "Likely Fake"
-    elif suspicion_score >= 2:
-        status = "Needs Caution"
+    if scam_prob >= 75.0:
+        status = "Likely Scam"
+    elif scam_prob >= 40.0:
+        status = "Suspicious"
     else:
         status = "Safe"
         if not reasons:
@@ -152,6 +169,8 @@ def analyze_link(url):
     return {
         "status": status,
         "score": suspicion_score,
+        "scam_probability": scam_prob,
+        "safe_probability": safe_prob,
         "reasons": reasons
     }
 

@@ -1,0 +1,26 @@
+# Datasets (Too large for GitHub - over 5GB)
+Datasets/
+
+# Python compiled bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.env/
+
+# Editor / IDE configs
+.vscode/
+.idea/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Temporary test media
+*.mp4
+*.avi
+*.mov
+test_sample.*
